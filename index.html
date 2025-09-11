@@ -1,191 +1,362 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8" />
-  <title>Pay Now</title>
+  <title>Online Payment Cart | Siva Prasad Mukherjee</title>
   <link rel="icon" type="image/x-icon" href="spm.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Open Graph for Facebook -->
-  <meta property="og:title" content="Pay Now" />
-  <meta property="og:description" content="Support or pay easily via UPI" />
-  <meta property="og:image" content="https://chai.spm.co.in/fb-preview.jpg" />
-  <meta property="og:url" content="https://chai.spm.co.in" />
-  <meta property="og:type" content="website" />
+  <!-- Google Fonts: Noto Sans Bengali -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      margin: 0;
-      font-family: system-ui, sans-serif;
-      background-color: #fff8e1;
+    :root {
+      --brand-blue: #2a4f6e;
+      --brand-gold: #d9a441;
+      --card-bg: #ffffff;
+      --border-color: #e0e0e0;
+      --danger-color: #dc3545;
+    }
+
+    /* --- Styles for Header --- */
+    header {
+      background: var(--card-bg);
+      padding: 15px 40px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .logo img {
+      height: 45px;
+    }
+    .logo-text {
       display: flex;
       flex-direction: column;
+      line-height: 1.2;
+    }
+    .site-name {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--brand-blue);
+    }
+    .tagline {
+      font-size: 13px;
+      font-weight: 500;
+      color: #5a748c;
+    }
+    /* --- End of Header Styles --- */
+
+    body {
+      font-family: 'Noto Sans Bengali', system-ui, sans-serif;
+      background: #e6f2ed;
+      margin: 0;
+      color: #2c2c2c;
+    }
+    
+    .content-wrapper {
+      display: flex;
+      justify-content: center;
       align-items: center;
-      padding: 30px 20px;
+      min-height: calc(100vh - 76px - 74px); /* Full height minus header and footer */
+      padding: 20px;
       text-align: center;
     }
 
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 30px;
+      max-width: 420px;
+      width: 100%;
+    }
+
     h1 {
-      font-size: 2em;
-      margin-bottom: 0.5em;
+      font-size: 26px;
+      color: #2a4f6e;
+      margin-top: 10px;
+      margin-bottom: 10px;
     }
 
     p {
-      font-size: 1.1em;
+      font-size: 18px;
+      line-height: 1.6;
       margin-bottom: 1.5em;
     }
-
-    button {
-      padding: 14px 28px;
-      background-color: #ffdd00;
+    
+    .action-button {
+      display: inline-block;
+      background-color: #d9a441;
+      text-decoration: none;
+      color: #000;
       border: none;
-      border-radius: 12px;
-      font-size: 18px;
-      font-weight: bold;
-      color: #333;
+      padding: 14px 28px;
+      font-size: 16px;
+      border-radius: 8px;
       cursor: pointer;
-      transition: 0.2s ease;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-top: 10px;
+      font-weight: bold;
+      transition: background-color 0.2s ease;
     }
 
-    button:hover {
-      background-color: #ffe74c;
+    .action-button:hover {
+      background-color: #c49037;
     }
 
     #qr-container,
-    #upi-link-container,
+    #upi-input-container,
     #instruction {
       margin-top: 25px;
       display: none;
     }
 
     #qr-container img {
-      width: 220px;
-      height: 220px;
+      width: 278px;
+      height: 512px;
       border-radius: 12px;
-      border: 2px solid #ccc;
+      border: 3px solid #d9a441;
     }
 
-    #upi-link {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #00c853;
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 10px;
-      font-size: 18px;
+    /* --- UPDATED STYLES FOR UPI INPUT --- */
+    #upi-input-container {
+      border-top: 1px dashed var(--border-color);
+      padding-top: 20px;
     }
-
-    #upi-link:hover {
-      background-color: #00e676;
+    #upi-input-container p {
+      font-size: 16px;
+      margin-bottom: 15px;
     }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+    }
+    .input-field {
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 16px;
+      text-align: center;
+      width: 80%;
+      box-sizing: border-box; /* Ensures padding is included in width */
+    }
+    #pay-now-btn {
+      margin-top: 5px;
+      width: calc(80% + 2px); /* Match width of inputs */
+    }
+    /* --- END OF UPDATED STYLES --- */
 
-    .alert {
+    #instruction {
       font-size: 1em;
-      background-color: #fff3cd;
-      color: #7b5e00;
+      background-color: #f0f4f8;
+      color: #333;
       padding: 15px 20px;
       border-radius: 10px;
-      margin-top: 20px;
-      max-width: 480px;
-      border: 1px solid #ffeeba;
+      margin-top: 25px; /* Increased margin */
+      border: 1px solid #d6e0ea;
     }
 
-    /* Translate Button Style */
+    .offer-price {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--danger-color);
+    }
+    .original-price {
+      font-size: 18px;
+      color: #6c757d;
+      text-decoration: line-through;
+      margin-left: 8px;
+    }
+
     #translate-btn {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      padding: 8px 12px;
-      background: #ffc107;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-      z-index: 9999;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #d9a441;
+        color: #000;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 9999;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    #google_translate_element {
+        display: none;
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        z-index: 9999;
+        background: white;
+        padding: 5px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
-    #google_translate_element {
-      margin-top: 10px;
+    /* --- NEW FOOTER STYLES --- */
+    footer {
+        background: #dbe8e4;
+        color: #5a748c;
+        text-align: center;
+        padding: 25px 20px;
+        font-size: 14px;
+        border-top: 1px solid var(--border-color);
+    }
+
+    @media(max-width: 768px) {
+        header { 
+            flex-direction: column; 
+            gap: 15px; 
+            padding: 20px; 
+            text-align: center;
+        }
+        .content-wrapper {
+          min-height: calc(100vh - 128px - 74px); /* Adjust for taller mobile header and footer */
+        }
     }
   </style>
 </head>
-
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 
-  <!-- Translate Button -->
-  <button id="translate-btn">🌐 Translate</button>
-  <!-- Container for Google Translate -->
+  <header>
+    <div class="logo">
+      <img src="name.jpg">
+      <div class="logo-text">
+        <span class="site-name">Siva Prasad Mukherjee</span>
+        <span class="tagline">Personal Payment Page</span>
+      </div>
+    </div>
+  </header>
+
+  <button id="translate-btn" title="Translate this page">🌐</button>
   <div id="google_translate_element"></div>
 
-  <h1>One Step Closer — Let’s Complete the Payment</h1>
-  <p>Please use the options below to complete your UPI payment.</p>
+  <main class="content-wrapper">
+    <div class="card">
+      <h1>📗 Pay to Siva Prasad Mukherjee</h1>
 
-  <button onclick="handleDonate()">Proceed with UPI</button>
+      <div class="price-block"></div>
 
-  <div id="upi-link-container">
-    <p>You’ll be redirected to your UPI app to complete the payment:</p>
-    <a href="upi://pay?pa=spmohq@oksbi&cu=INR" id="upi-link">Pay via UPI</a>
-  </div>
+      <button class="action-button" onclick="handleDonate()">UPI দিয়ে পেমেন্ট করুন</button>
 
-  <div id="qr-container">
-    <p>Or scan this QR code:</p>
-    <img src="siva-qr.jpg" alt="UPI QR Code" />
-  </div>
+      <div id="qr-container">
+        <p>এই QR কোডটি স্ক্যান করে পেমেন্ট করুন:</p>
+        <img src="siva-qr.jpg" alt="UPI QR Code" />
+      </div>
 
-  <div id="instruction">
-    💬 Once you've completed the payment, please WhatsApp your full name <strong>+919883787947</strong>. We'll confirm your transaction shortly.
-  </div>
+      <div id="upi-input-container">
+        <p>অথবা, পরিমাণ এবং আপনার UPI ID লিখে সরাসরি পেমেন্ট করুন:</p>
+        <div class="form-group">
+          <input type="number" id="amount-input" class="input-field" placeholder="Amount (₹)" min="1">
+          <input type="text" id="buyer-upi-id-input" class="input-field" placeholder="Your UPI ID (e.g., yourname@bank)" autocapitalize="none">
+          <button id="pay-now-btn" class="action-button">Pay Now</button>
+        </div>
+      </div>
 
-  <div class="alert">
-    <strong>Important:</strong> All payments made through this page are considered FINAL and are not eligible for refund or exchange. Please confirm the purpose and amount before proceeding with your UPI payment.<br><br>
-    <strong>Note:</strong> Don't forget to send a screenshot of your successful payment to our support desk via WhatsApp: <a href="https://wa.me/919883787947" target="_blank">Click here to send</a>
-  </div>
+      <div id="instruction">
+        💬 পেমেন্ট সম্পূর্ণ করার পরে, অনুগ্রহ করে আপনার পুরো নাম <strong>9564787946</strong> নম্বরে হোয়াটসঅ্যাপ করুন।
+      </div>
+    </div>
+  </main>
+
+  <!-- === NEW FOOTER SECTION === -->
+  <footer>
+    Copyright &copy; <span id="copyright-year"></span> Siva Prasad Mukherjee. All Rights Reserved.
+  </footer>
+  <!-- === END OF FOOTER SECTION === -->
 
   <script>
-    function isMobileDevice() {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    }
-
     function handleDonate() {
-      const upiLinkSection = document.getElementById("upi-link-container");
       const qrSection = document.getElementById("qr-container");
+      const upiInputSection = document.getElementById("upi-input-container");
       const instruction = document.getElementById("instruction");
+      const donateButton = document.querySelector('.action-button');
 
-      if (isMobileDevice()) {
-        upiLinkSection.style.display = "block";
-        upiLinkSection.scrollIntoView({ behavior: "smooth" });
-      } else {
-        qrSection.style.display = "block";
-        qrSection.scrollIntoView({ behavior: "smooth" });
-      }
+      qrSection.style.display = "block";
+      upiInputSection.style.display = "block";
+      
+      qrSection.scrollIntoView({ behavior: "smooth", block: "center" });
+      
+      donateButton.style.display = 'none';
 
       setTimeout(() => {
         instruction.style.display = "block";
-        instruction.scrollIntoView({ behavior: "smooth" });
-      }, 0);
+      }, 300);
     }
 
-    // Lazy Load Google Translate on button click
+    document.getElementById('pay-now-btn').addEventListener('click', function() {
+      const amountInput = document.getElementById('amount-input');
+      const buyerUpiIdInput = document.getElementById('buyer-upi-id-input');
+      
+      const amount = amountInput.value.trim();
+      const buyerUpiId = buyerUpiIdInput.value.trim();
+
+      if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
+        alert('অনুগ্রহ করে একটি সঠিক পরিমাণ লিখুন (e.g., 100)');
+        amountInput.focus();
+        return;
+      }
+      
+      if (!buyerUpiId || !buyerUpiId.includes('@')) {
+        alert('অনুগ্রহ করে আপনার সঠিক UPI ID লিখুন (e.g., yourname@bank)');
+        buyerUpiIdInput.focus();
+        return;
+      }
+
+      const receiverUpi = '9564787946-2@ybl';
+      const receiverName = 'Siva Prasad Mukherjee';
+      const note = 'Payment to Siva Prasad Mukherjee';
+      
+      const upiUrl = `upi://pay?pa=${receiverUpi}&pn=${encodeURIComponent(receiverName)}&tn=${encodeURIComponent(note)}&am=${amount}&cu=INR`;
+
+      window.location.href = upiUrl;
+    });
+
     function googleTranslateElementInit() {
       new google.translate.TranslateElement({
-        pageLanguage: 'en',
+        pageLanguage: 'bn',
         includedLanguages: 'en,hi,bn,gu,kn,ml,mr,pa,ta,te',
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
       }, 'google_translate_element');
     }
 
     document.getElementById('translate-btn').addEventListener('click', function() {
+      var translateContainer = document.getElementById('google_translate_element');
+      
+      if (translateContainer.style.display === 'block') {
+          translateContainer.style.display = 'none';
+      } else {
+          translateContainer.style.display = 'block';
+      }
+
       if (!window.googleTranslateScriptAdded) {
         window.googleTranslateScriptAdded = true;
-        var gtScript = document.createElement('script');
-        gtScript.type = 'text/javascript';
-        gtScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-        document.body.appendChild(gtScript);
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+        document.body.appendChild(script);
       }
     });
+
+    // --- NEW: SET DYNAMIC COPYRIGHT YEAR ---
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
   </script>
 
 </body>
